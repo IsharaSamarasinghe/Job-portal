@@ -1,0 +1,43 @@
+.hero {
+    background: linear-gradient(to right, #360075, #0a011c);
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 16px;
+    margin: 20px;
+  }
+  
+  .hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  .search-box {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .search-box input {
+    padding: 10px;
+    width: 200px;
+    border-radius: 8px;
+    border: none;
+  }
+  
+  .search-box button {
+    background-color: #0066ff;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
