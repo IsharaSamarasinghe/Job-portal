@@ -1,0 +1,119 @@
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem;
+}
+
+/* Signup box */
+.signup-form {
+  background-color: #ffffff;
+  padding: 2rem 1.5rem;
+  border-radius: 14px;
+  width: 360px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  color: #1B3C53;
+  position: relative;
+}
+
+/* Title */
+.signup-form h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #1B3C53;
+}
+
+/* Input fields */
+.input-group {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #1B3C53;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f1f1f1;
+  font-size: 0.95rem;
+  color: #1B3C53;
+  transition: box-shadow 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #456882;
+}
+
+/* Error message */
+.error-msg {
+  background-color: #ffe4e4;
+  color: #b00020;
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Submit button */
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #1B3C53;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-submit:hover {
+  background-color: #163244;
+}
+
+/* Bottom text link */
+.text-login {
+  text-align: center;
+  margin-top: 1.4rem;
+  font-size: 0.9rem;
+  color: #1B3C53;
+}
+
+.text-login a {
+  color: #456882;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.text-login a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .signup-form {
+    width: 90%;
+    padding: 2rem 1.2rem;
+  }
+}
