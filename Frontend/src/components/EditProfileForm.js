@@ -125,4 +125,4 @@ const EditProfileForm = ({ onclose, onSave}) => {
     );
 };
 
-export default EditProfileForm;
+export default EditProfileForm;    
