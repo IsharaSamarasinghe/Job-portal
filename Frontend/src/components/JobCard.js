@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import './JobCard.css';
 const JobCard = ({ job }) => {
   return (
     <div className="job-card">

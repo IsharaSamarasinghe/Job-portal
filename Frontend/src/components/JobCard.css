@@ -1,0 +1,152 @@
+.job-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+    border: 1px solid rgba(224, 224, 224, 0.5);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    max-width: 300px;
+  }
+  
+  .job-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+    animation: rotate 15s linear infinite;
+    z-index: 0;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card h3 {
+    color: #1B3C53;
+    font-size: 1.8em;
+    margin: 0 0 12px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card .company-info {
+    color: #7f8c8d;
+    font-size: 1.1em;
+    margin: 8px 0;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .job-card .company-info img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .job-card .job-tags {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .job-card .job-tags span {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: #fff;
+    background: #3498db;
+  }
+  
+  .job-card .job-tags .full-time {
+    background: #2ecc71;
+  }
+  
+  .job-card .job-tags .entry-level {
+    background: #9b59b6;
+  }
+  
+  .job-card p {
+    color: #7f8c8d;
+    font-size: 1em;
+    margin: 10px 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .job-card .job-salary {
+    font-size: 1.5em;
+    color: #e67e22;
+    font-weight: 700;
+    margin: 10px 0;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, #e67e22, #f1c40f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .job-card .job-posted {
+    font-size: 0.9em;
+    color: #95a5a6;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .job-card .job-posted svg {
+    margin-right: 5px;
+  }
+  
+  .job-card a {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #3498db, #8e44ad);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .job-card a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shine 2s infinite;
+  }
+  
+  .job-card a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(45deg, #2980b9, #9b59b6);
+  }
+  
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes shine {
+    0% { left: -100%; }
+    20% { left: 100%; }
+    100% { left: 100%; }
+  }
