@@ -1,71 +1,71 @@
-/* Home Page Specific Styles */
-.home-content {
-  padding-top: 80px; /* To account for fixed navbar */
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+  position: relative;
+  min-height: 100vh;
+  background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover; /* Placeholder image */
+  backdrop-filter: blur(5px); /* Blur effect */
 }
 
-.hero-section {
+.home-content {
   text-align: center;
-  padding: 2rem 0;
+  padding: 30px;
+  background: rgba(242, 243, 239, 0.8); /* Lightened #F9F3EF with transparency */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(27, 60, 83, 0.3);
+  animation: slideUp 1.5s ease-out;
 }
 
 .hero-section h1 {
+  font-size: 2.5em;
   color: #1B3C53;
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 3px #D2C1B6;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
 .hero-section p {
+  font-size: 1.1em;
   color: #456882;
-  font-size: 1.1rem;
+  margin-bottom: 25px;
   line-height: 1.6;
-  max-width: 800px;
-  margin: 0 auto 2rem;
 }
 
-/* Registration CTA Styles */
 .registration-cta {
-  margin-top: 3rem;
-  padding: 2rem;
-  background-color: #F9F3EF;
-  border-radius: 8px;
+  margin-top: 25px;
 }
 
 .registration-cta h2 {
+  font-size: 1.4em;
   color: #1B3C53;
-  margin-bottom: 1.5rem;
+  margin-bottom: 15px;
 }
 
-.registration-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-}
-
-.reg-btn {
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.reg-btn.recruiter {
-  background-color: #1B3C53;
-  color: #F9F3EF;
-}
-
-.reg-btn.recruiter:hover {
-  background-color: #2A4B61;
-}
-
-.reg-btn.jobseeker {
+.register-btn {
+  display: inline-block;
+  padding: 12px 25px;
   background-color: #456882;
   color: #F9F3EF;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.reg-btn.jobseeker:hover {
-  background-color: #3A5A72;
+.register-btn:hover {
+  background-color: #1B3C53;
+  transform: scale(1.05);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
