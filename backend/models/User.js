@@ -29,14 +29,23 @@ const userSchema = new mongoose.Schema({
   company: {
     type: String,
     trim: true,
-    required: function() { return this.role === 'recruiter'; }
+    required: function() 
+    { return this.role === 'recruiter'; }
   },
   skills: {
     type: [String],
-    default: []
+    default: [],
+    validate: {
+      validator: function() {
+        return this.role === 'job_seeker' || this.skills.length === 0;
+      }
+    }
   },
   profile: {
-    bio: String,
+    bio: {
+      type: String,
+      trim: true
+    },
     experience: [{
       title: String,
       company: String,
