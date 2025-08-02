@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link component
-import background from '../assets/background.jpg';
+import background from '../assets/background.png';
 import './styles/Home.css';
 
 const Home = () => {

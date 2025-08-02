@@ -13,7 +13,6 @@ import JobDetails from './pages/JobDetails';
 import ApplicationForm from './components/ApplicationForm';
 import EditProfileForm from './components/EditProfileForm';
 import ContactUs from './pages/ContactUs';
-import Explore from './pages/Explore';
 import AboutUs from './pages/AboutUs';
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/edit-profile" element={<EditProfileForm />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/explore" element={<Explore />} />
         <Route path="/about" element={<AboutUs />} />
 
         {/* Protected Routes */}

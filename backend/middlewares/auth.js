@@ -18,3 +18,5 @@ const protect = async (req, res, next) => {
     return errorHandler(res, 401, 'Invalid or expired token');
   }
 };
+
+module.exports = protect;

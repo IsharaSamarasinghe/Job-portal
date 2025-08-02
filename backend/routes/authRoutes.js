@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const authenticateUser = require('../middlewares/auth');
 const protect = require('../middlewares/auth');
 
 // Register
@@ -106,7 +105,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/user/info', authenticateUser, async (req, res) => {
+router.get('/user/info', protect, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     if (!user) {
