@@ -18,8 +18,7 @@ const jobSchema = new mongoose.Schema({
     trim: true
   },
   salary: {
-    type: Number,
-    trim: true
+    type: Number
   },
   description: {
     type: String,
@@ -42,21 +41,19 @@ const jobSchema = new mongoose.Schema({
   postedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+    required: true,
+    validate: {
+      validator: async function (userId) {
+        const user = await mongoose.model('User').findById(userId);
+        return user && user.role === 'recruiter';
+      }
+    }
   },
   isActive: {
     type: Boolean,
     default: true
   }
-});
+},{timestamps:true});
 
 // Indexes for better performance
 jobSchema.index({ title: 'text', description: 'text', company: 'text' });
