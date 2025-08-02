@@ -1,4 +1,3 @@
-// models/Application.js
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
@@ -14,10 +13,13 @@ const applicationSchema = new mongoose.Schema({
   },
   resume: {
     type: String,
-    required: [true, 'Resume is required']
+    required: [true, 'Resume is required'],
+    match: [/^.*\.(pdf|doc|docx)$/, 'Resume must be a valid file format (pdf,doc,docx)']
   },
   coverLetter: {
-    type: String
+    type: String,
+    required: [true, 'Resume is required'],
+    match: [/^.*\.(pdf|doc|docx)$/, 'Resume must be a valid file format (pdf,doc,docx)']
   },
   status: {
     type: String,
@@ -40,4 +42,5 @@ const applicationSchema = new mongoose.Schema({
 // Ensure one application per job per user
 applicationSchema.index({ job: 1, applicant: 1 }, { unique: true });
 
+const Application = mongoose.model('Application', applicationSchema);
 module.exports = mongoose.model('Application', applicationSchema);
