@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const authController =require('../controllers/authController')
 const protect = require('../middlewares/auth');
 
 // Register
@@ -19,12 +20,10 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = new User({
       name,
       email,
-      password: hashedPassword,
+      password,
       role,
       company: role === 'recruiter' ? company : undefined
     });
@@ -105,32 +104,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/user/info', protect, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    return res.json(user);
-  } catch (err) {
-    console.error('Error fetching user info', err);
-    return res.status(500).json({ message: 'Server error' });
-  }
-});
-
 // Get current user profile
-router.get('/me', protect, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('-password');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    return res.json(user);
-  } catch (err) {
-    console.error('Error fetching user profile', err);
-    return res.status(500).json({ message: 'Server error' });
-  }
-});
+router.get('/me', protect, authController.getCurrentUser);
 
 // Update user profile
 // PUT /api/auth/update-profile
@@ -143,8 +118,19 @@ router.put('/update-profile', protect, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Update fields
-    user.name = updates.name || user.name;
+    // Only update fields if they are provided
+    if (updates.name !== undefined) user.name = updates.name;
+    if (updates.email !== undefined) user.email = updates.email;
+    if (updates.company !== undefined) user.company = updates.company;
+    if (updates.skills !== undefined) user.skills = updates.skills;
+
+    if (updates.profile) {
+      user.profile = {
+        bio: updates.profile.bio || '',
+        experience: updates.profile.experience || [],
+        education: updates.profile.education || []
+      };
+    }
 
     await user.save();
 

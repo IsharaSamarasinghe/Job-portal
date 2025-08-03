@@ -57,21 +57,46 @@ const EditProfileForm = ({ onclose, onSave}) => {
         e.preventDefault();
         setSaving(true);
         setError('');
+
+        // Create cleaned data object
+        const updatePayload = {
+            name: userData.name,
+            email: userData.email,
+        };
+
+        if (userData.role === 'recruiter') {
+            updatePayload.company = userData.company;
+        }
+        if (userData.role === 'job_seeker') {
+             updatePayload.skills = Array.isArray(userData.skills)
+                ? userData.skills
+                : userData.skills.split(',').map(s => s.trim());
+            updatePayload.profile = {
+                bio: userData.profile?.bio || '',
+                experience: Array.isArray(userData.profile?.experience)
+                    ? userData.profile.experience
+                    : [], // Optional: parse if needed
+                education: Array.isArray(userData.profile?.education)
+                    ? userData.profile.education
+                    : []
+            };
+        }
+
         try {
-            const response = await api.put('/auth/update-profile', userData);
+            const response = await api.put('/auth/update-profile', updatePayload);
             alert('Profile updated successfully!');
+
+            // Update session storage user info
+            const updatedUser = { ...user, name: userData.name, email: userData.email };
+            sessionStorage.setItem('user', JSON.stringify(updatedUser));
+
             if (onSave) onSave(response.data);
             if (onclose) onclose();
-            else {
-                if (userRole === 'recruiter') {
-                    navigate('/recruiter/dashboard');
-                } else {
-                    navigate('/job_seeker/dashboard');
-                }
-            }
+            else handleClose();
+
         } catch (err) {
             console.error('Failed to update profile:', err);
-            if (err.response && err.response.data && err.response.data.message) {
+            if (err.response?.data?.message) {
                 setError(err.response.data.message);
             } else {
                 setError('Failed to update profile');
@@ -105,13 +130,36 @@ const EditProfileForm = ({ onclose, onSave}) => {
             { userData.role === 'job_seeker' && (
                 <>
                     <label>Skills (comma separated):</label>
-                    <input name="skills" value={userData.skills?.join(', ') || ''} onChange={(e) => handleChange({ target: { name: 'skills', value: e.target.value.split(',').map(skill => skill.trim()) } })} />
+                    <input
+                        name="skills"
+                        value={Array.isArray(userData.skills) ? userData.skills.join(', ') : userData.skills || ''}
+                        onChange={handleChange}
+                    />
+
                     <label>Bio</label>
                     <textarea name="bio" value={userData.profile?.bio || ''} onChange={handleProfileChange} />
-                    <label>Experience</label>
-                    <textarea name="experience" value={userData.profile?.experience || ''} onChange={handleProfileChange} />
-                    <label>Education</label>
-                    <textarea name="education" value={userData.profile?.education || ''} onChange={handleProfileChange} />
+
+                    <label>Experience (one per line)</label>
+                    <textarea
+                        name="experience"
+                        value={
+                            Array.isArray(userData.profile?.experience)
+                                ? userData.profile.experience.join('\n')
+                                : userData.profile?.experience || ''
+                        }
+                        onChange={handleProfileChange}
+                    />
+
+                    <label>Education (one per line)</label>
+                    <textarea
+                        name="education"
+                        value={
+                            Array.isArray(userData.profile?.education)
+                                ? userData.profile.education.join('\n')
+                                : userData.profile?.education || ''
+                        }
+                        onChange={handleProfileChange}
+                    />
                 </>
             )}
 
