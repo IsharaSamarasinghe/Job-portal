@@ -1,54 +1,177 @@
+/* General container styling */
 .about-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: 'Segoe UI', sans-serif;
-    line-height: 1.6;
-    color: #333;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Section styling */
+section {
+  margin-bottom: 60px;
+}
+
+/* Headings */
+h1, h2 {
+  color: #1a1a1a;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+/* Intro section */
+.intro-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.intro-section p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #4a4a4a;
+}
+
+/* Who we are section */
+.who-we-are {
+  padding: 20px;
+}
+
+.who-we-are p {
+  font-size: 1rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* What makes us different section */
+.what-makes-us-different ul {
+  list-style: none;
+  padding: 0;
+}
+
+.what-makes-us-different li {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.what-makes-us-different li::before {
+  content: '✔';
+  margin-right: 10px;
+  color: #1B3C53;
+  font-weight: bold;
+}
+
+/* Join us section */
+.join-us-section {
+  text-align: center;
+  padding: 40px;
+  background-color: #8c9eab;
+  color: #fff;
+  border-radius: 12px;
+}
+
+.join-us-section h2 {
+  color: #fff;
+}
+
+.join-us-section p {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  font-size: 1.1rem;
+}
+
+.join-button {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #fff;
+  color: #1B3C53;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.join-button:hover {
+  background-color: #e6f0ff;
+  transform: translateY(-2px);
+}
+
+/* Contact section */
+.contact-section {
+  text-align: center;
+}
+
+.contact-section p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.contact-section a {
+  color: #1B3C53;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-section a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 20px;
   }
-  
-  h1, h2 {
-    color: #1a237e;
-    margin-bottom: 15px;
+
+  h1 {
+    font-size: 2rem;
   }
-  
-  .intro-section,
-  .who-we-are,
-  .what-makes-us-different,
-  .join-us-section {
-    margin-bottom: 40px;
+
+  h2 {
+    font-size: 1.5rem;
   }
-  
-  ul {
-    list-style-type: none;
-    padding-left: 0;
+
+  .intro-section {
+    padding: 20px;
   }
-  
-  ul li {
-    margin-bottom: 10px;
-    padding-left: 1.2em;
-    position: relative;
-  }
-  
-  ul li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: #4caf50;
-  }
-  
+
   .join-button {
-    display: inline-block;
-    margin-top: 20px;
-    background-color: #4caf50;
-    color: white;
     padding: 10px 20px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
   }
-  
-  .join-button:hover {
-    background-color: #388e3c;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
   }
-  
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .intro-section p,
+  .who-we-are p,
+  .join-us-section p {
+    font-size: 0.95rem;
+  }
+
+  .what-makes-us-different li {
+    font-size: 1rem;
+  }
+}
