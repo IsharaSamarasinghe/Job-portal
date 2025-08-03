@@ -107,3 +107,18 @@
   font-size: 14px;
   font-weight: 400;
 }
+
+.info-message {
+  color: green;
+  margin-bottom: 10px;
+}
+
+.password-reset-btn {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}

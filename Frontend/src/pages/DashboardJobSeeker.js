@@ -8,16 +8,18 @@ const DashboardJobSeeker = () => {
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const [user, setUser]= useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [jobsRes, appsRes] = await Promise.all([
+        const [userRes, jobsRes, appsRes] = await Promise.all([
+          api.get('/auth/me'),
           api.get('/jobs'),
           api.get('/applications/me')
         ]);
+        setUser(userRes.data);
         setJobs(jobsRes.data);
         setApplications(appsRes.data);
       } catch (err) {
@@ -49,7 +51,25 @@ const DashboardJobSeeker = () => {
         <div className="dashboard-header">
           <div>
             <h1>Welcome,{user?.name}</h1>
-            <p>Email: {user?.email}</p>
+            <p><strong>Email:</strong> {user?.email}</p>
+            <p><strong>Role:</strong>{user?.role}</p>
+            {user?.role === 'job_seeker' && (
+              <>
+                <p><strong>Skills:</strong> {user.skills?.join(', ') || 'N/A'}</p>
+                <p><strong>Education:</strong></p>
+                <ul>
+                  {user.profile?.education?.map((edu, index) => (
+                    <li key={index}>{edu.degree} from {edu.institution} ({edu.year})</li>
+                  ))}
+                </ul>
+                <p><strong>Experience:</strong></p>
+                <ul>
+                  {user.profile?.experience?.map((exp, index) => (
+                    <li key={index}>{exp.title} at {exp.company} ({exp.duration}) - {exp.description}</li>
+                  ))}
+                </ul>
+               </>
+            )} 
           </div>
           <button className="edit-btn" onClick={() => navigate('/edit-profile')}>Edit Profile</button>
         </div>'
@@ -81,8 +101,42 @@ const DashboardJobSeeker = () => {
             <ul>
               {applications.map(app => (
                 <li key={app._id}>
-                  <h3>{app.job.title}</h3>
-                  <p>Status: {app.status}</p>
+                  <h3>{app.job?.title}</h3>
+                  <p><strong>Company:</strong> {app.job?.company}</p>
+                  <p><strong>Location:</strong> {app.job?.location}</p>
+                  <p><strong>Status:</strong> {app.status}</p>
+                  <p>
+                    <strong>Resume:</strong>{' '}
+                    <a
+                      href={`http://localhost:5000/uploads/${app.resume}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Resume
+                    </a>
+                  </p>
+                  <p>
+                    <strong>Cover Letter:</strong>{' '}
+                    <a
+                      href={`http://localhost:5000/uploads/${app.coverLetter}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Cover Letter
+                    </a>
+                  </p>
+                  {app.notes && app.notes.length > 0 && (
+                    <div>
+                      <strong>Recruiter Notes:</strong>
+                      <ul>
+                        {app.notes.map((note, idx) => (
+                          <li key={idx}>
+                            {note.content} ({new Date(note.createdAt).toLocaleDateString()})
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
