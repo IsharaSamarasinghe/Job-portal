@@ -15,11 +15,14 @@ import EditProfileForm from './components/EditProfileForm';
 import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/AboutUs';
 import ViewApplicants from './pages/viewApplicants';
+import Footer from './components/Footer'; // NEW
+
 
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+       <main style={{ minHeight: '30vh' }}> {/* optional: push footer down */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -54,6 +57,8 @@ function App() {
           </ProtectedRoute>
         } />
       </Routes>
+      </main>
+      <Footer /> {/* NEW */}
     </BrowserRouter>
   );
 }

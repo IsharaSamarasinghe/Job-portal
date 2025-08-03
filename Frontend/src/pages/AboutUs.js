@@ -71,7 +71,7 @@ const AboutUs = () => {
       </section>
 
       <section className="about-section contact-info">
-        <h2 className="section-title">Contact Us</h2>
+        <h2 className="section-title">Reach Out</h2>
         <div className="contact-grid">
           <div className="contact-card">
             <span className="contact-icon">📞</span>
