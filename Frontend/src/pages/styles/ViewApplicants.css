@@ -1,0 +1,21 @@
+.applicants-page {
+  padding: 2rem;
+}
+
+.applicants-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.applicant-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.documents a {
+  margin-right: 10px;
+  color: blue;
+  text-decoration: underline;
+}

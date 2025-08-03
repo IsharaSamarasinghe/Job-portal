@@ -114,6 +114,8 @@
   justify-content: space-between;
   padding-top: 15px;
   border-top: 1px solid #eee;
+  flex-wrap: wrap;
+  gap:10px;
 }
 
 .view-applicants {
@@ -123,7 +125,15 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  z-index: 10;
+  position: relative;
+  transition: background-color 0.3s ease;
 }
+
+.view-applicants:hover {
+  background-color: #1976d2;
+}
+
 
 .logout-section {
   margin-top: 40px;

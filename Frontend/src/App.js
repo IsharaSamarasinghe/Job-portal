@@ -14,6 +14,7 @@ import ApplicationForm from './components/ApplicationForm';
 import EditProfileForm from './components/EditProfileForm';
 import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/AboutUs';
+import ViewApplicants from './pages/viewApplicants';
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
         <Route path="/edit-profile" element={<EditProfileForm />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/recruiter/jobs/:id/applicants" element={<ViewApplicants />} />
+
 
         {/* Protected Routes */}
         

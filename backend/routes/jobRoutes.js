@@ -1,7 +1,8 @@
 const express = require('express');
+const app = express();
 const router = express.Router();
 const path = require('path');
-const Job = require('../models/job');
+const Job = require('../models/Job');
 const protect = require('../middlewares/auth');
 const Application = require('../models/Application');
 const multer = require('multer');
@@ -16,6 +17,8 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
+
+app.use('/uploads', express.static('uploads'));
 
 // @desc    Create a new job
 // @route   POST /api/jobs
@@ -46,17 +49,57 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @desc    Get jobs posted by the logged-in recruiter
+// @desc    Get jobs posted by the logged-in recruiter, with application counts
 // @route   GET /api/jobs/my-jobs
 // @access  Private
 router.get('/my-jobs', protect, async (req, res) => {
   try {
     const jobs = await Job.find({ postedBy: req.user.id }).sort('-createdAt');
-    res.json(jobs);
+    const applicationCounts = await Application.aggregate([
+      { $match: { job: { $in: jobs.map(j => j._id) } } },
+      { $group: { _id: "$job", count: { $sum: 1 } } }
+    ]);
+
+    const countsMap = {};
+    applicationCounts.forEach(item => {
+      countsMap[item._id.toString()] = item.count;
+    });
+
+    const jobsWithApplicantCounts = jobs.map(job => ({
+      ...job.toObject(),
+      applicationCount: countsMap[job._id.toString()] || 0
+    }));
+
+    res.json(jobsWithApplicantCounts);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch your jobs' });
   }
 });
+
+
+// @desc    Get all applicants for a specific job
+// @route   GET /api/jobs/:id/applications
+// @access  Private (Only the recruiter who posted it)
+router.get('/:id/applications', protect, async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) return res.status(404).json({ message: 'Job not found' });
+
+    // Check if current user is the one who posted the job
+    if (job.postedBy.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized to view applicants for this job' });
+    }
+
+    const applications = await Application.find({ job: job._id })
+      .populate('applicant', 'name email education experience skills');
+
+    res.json(applications);
+  } catch (err) {
+    console.error('Error fetching applications:', err);
+    res.status(500).json({ message: 'Failed to fetch applicants' });
+  }
+});
+
 
 // @desc    Apply for a job
 // @route   POST /api/jobs/:id/apply

@@ -107,9 +107,9 @@ const DashboardRecruiter = () => {
               <div className="job-footer">
                 <button 
                   className="view-applicants"
-                  onClick={() => navigate(`/jobs/${job._id}/applications`)}
+                  onClick={() => navigate(`/recruiter/jobs/${job._id}/applicants`)}
                 >
-                  View Applicants ({job.applications?.length || 0})
+                  View Applicants ({job.applicationCount || 0})
                 </button>
                 <span className="post-date">
                   Posted on {new Date(job.createdAt).toLocaleDateString()}

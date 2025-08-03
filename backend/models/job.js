@@ -52,7 +52,11 @@ const jobSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
-  }
+  },
+  applications: [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Application'
+}]
 },{timestamps:true});
 
 // Indexes for better performance
