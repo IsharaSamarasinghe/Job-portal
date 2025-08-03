@@ -5,7 +5,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import './styles/DashboardJobSeeker.css';
 
 const DashboardJobSeeker = () => {
-  const [jobs, setJobs] = useState([]);
+ // const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser]= useState(null);
@@ -20,7 +20,7 @@ const DashboardJobSeeker = () => {
           api.get('/applications/me')
         ]);
         setUser(userRes.data);
-        setJobs(jobsRes.data);
+      //  setJobs(jobsRes.data);
         setApplications(appsRes.data);
       } catch (err) {
         console.error(err);
@@ -31,17 +31,18 @@ const DashboardJobSeeker = () => {
     fetchData();
   }, []);
 
-  const applyToJob = async (jobId) => {
-    try {
-      await api.post(`/jobs/${jobId}/apply`);
-      alert('Application submitted!');
-    } catch (err) {
-      alert(err.response?.data?.message || 'Application failed');
-    }
-  };
+  //const applyToJob = async (jobId) => {
+  //  try {
+   //   await api.post(`/jobs/${jobId}/apply`);
+   //   alert('Application submitted!');
+    //} catch (err) {
+    //  alert(err.response?.data?.message || 'Application failed');
+   // }
+ // };
 
   const handleLogout = () => {
     sessionStorage.clear();
+    window.dispatchEvent(new Event("login")); // this will re-trigger navbar state
     navigate('/login');
   }
 
@@ -50,7 +51,7 @@ const DashboardJobSeeker = () => {
       <div className="dashboard">
         <div className="dashboard-header">
           <div>
-            <h1>Welcome,{user?.name}</h1>
+            <h1>Welcome, {user?.name}</h1>
             <p><strong>Email:</strong> {user?.email}</p>
             <p><strong>Role:</strong>{user?.role}</p>
             {user?.role === 'job_seeker' && (
@@ -72,27 +73,9 @@ const DashboardJobSeeker = () => {
             )} 
           </div>
           <button className="edit-btn" onClick={() => navigate('/edit-profile')}>Edit Profile</button>
-        </div>'
+        </div>
         
-        <section className="job-listings">
-          <h2>Available Jobs</h2>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <ul>
-              {jobs.map(job => (
-                <li key={job._id}>
-                  <h3>{job.title}</h3>
-                  <p>{job.company} • {job.location}</p>
-                  <button onClick={() => applyToJob(job._id)}>
-                    Apply
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-
+       
         <section className="my-applications">
           <h2>My Applications</h2>
           {applications.length === 0 ? (
