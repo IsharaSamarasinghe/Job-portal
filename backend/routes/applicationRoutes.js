@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { Application } = require('../models/Application');
-const { Job } = require('../models/job');
+const Application = require('../models/Application');
+const Job  = require('../models/job');
 const authMiddleware = require('../middlewares/auth');
 
 // GET /api/applications/me — Get applications of logged-in job seeker

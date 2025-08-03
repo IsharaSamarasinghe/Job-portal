@@ -42,5 +42,4 @@ const applicationSchema = new mongoose.Schema({
 // Ensure one application per job per user
 applicationSchema.index({ job: 1, applicant: 1 }, { unique: true });
 
-const Application = mongoose.model('Application', applicationSchema);
 module.exports = mongoose.model('Application', applicationSchema);
