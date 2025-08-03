@@ -102,8 +102,8 @@ const DashboardRecruiter = () => {
               <p className="company-location">
                 {job.company} • {job.location}
               </p>
-              <p className="salary">
-                {job.salaryRange?.min ? `$${job.salaryRange.min} - $${job.salaryRange.max}` : 'Salary not specified'}
+              <p className="salary"> Salary:  
+                 {job.salary ? `$${job.salary}` : 'Salary not specified'}
               </p>
               <div className="job-footer">
                 <button 
