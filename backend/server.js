@@ -23,13 +23,17 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 
 // Error Handling Middleware
-app.use((err, req, res, next) => {
-  res.status(404).json({message: 'Route not found '});
+// Handle 404 Not Found for unregistered routes
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Route not found' });
 });
+
+// General error handler
 app.use((err, req, res, next) => {
-  console.error('server error:', err);
-  res.status(500).json({message: 'Internal server error'});
+  console.error('Server error:', err);
+  res.status(500).json({ message: 'Internal server error' });
 });
+
     
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
