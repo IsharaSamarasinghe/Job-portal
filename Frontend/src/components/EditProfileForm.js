@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import api from "../api";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import './EditProfileForm.css';
 
@@ -7,9 +8,13 @@ const EditProfileForm = ({ onclose, onSave}) => {
     const [userData, setUserData] = useState(null);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [passwordMessage, setPasswordMessage] = useState('');
     const navigate = useNavigate();
     const user = JSON.parse(sessionStorage.getItem('user'));
     const userRole = user?.role;
+
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -42,6 +47,25 @@ const EditProfileForm = ({ onclose, onSave}) => {
             }
         }));
     };
+
+    const handlePasswordChange = async (e) => {
+        e.preventDefault();
+        setPasswordMessage('');
+        try {
+            const response = await api.put('/auth/update-password', {
+                currentPassword,
+                newPassword
+            });
+            setPasswordMessage(response.data.message || 'Password updated successfully');
+            setCurrentPassword('');
+            setNewPassword('');
+        } catch (err) {
+            setPasswordMessage(
+                err.response?.data?.message || 'Error updating password'
+            );
+        }
+    };
+
 
     const handleClose = () => {
         if (userRole === 'recruiter') {
@@ -162,6 +186,37 @@ const EditProfileForm = ({ onclose, onSave}) => {
                     />
                 </>
             )}
+
+            <hr />
+            <h4>Reset Password</h4>
+
+            {passwordMessage && <div className="info-message">{passwordMessage}</div>}
+
+            <label>Current Password:</label>
+            <input
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter current password"
+            />
+
+            <label>New Password:</label>
+            <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter new password"
+            />
+
+            <button
+                type="button"
+                onClick={handlePasswordChange}
+                disabled={!currentPassword || !newPassword}
+                className="password-reset-btn"
+            >
+                Update Password
+            </button>
+
 
             <div className="form-actions">
                 <button type="submit" disabled={saving}>

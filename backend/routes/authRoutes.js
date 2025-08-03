@@ -142,5 +142,32 @@ router.put('/update-profile', protect, async (req, res) => {
   }
 });
 
+// PUT /api/auth/change-password
+router.put('/update-password', protect, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'Current and new passwords are required' });
+    }
+
+    const user = await User.findById(req.user.id);
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword; // Let pre-save middleware hash it
+    await user.save();
+
+    res.json({ message: 'Password changed successfully' });
+
+  } catch (err) {
+    console.error('Change password error:', err);
+    res.status(500).json({ message: 'Server error while changing password' });
+  }
+});
+
 
 module.exports = router;
