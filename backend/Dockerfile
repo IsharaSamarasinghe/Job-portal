@@ -16,3 +16,7 @@ EXPOSE 5000
 
 # Start your app
 CMD ["node", "server.js"]
+
+RUN mkdir -p /app/temp && \
+    chmod -R 777 /app/temp
+ENV TEMP_DIR=/app/temp
