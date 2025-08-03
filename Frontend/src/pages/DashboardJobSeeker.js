@@ -8,16 +8,18 @@ const DashboardJobSeeker = () => {
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const [user, setUser]= useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [jobsRes, appsRes] = await Promise.all([
+        const [userRes, jobsRes, appsRes] = await Promise.all([
+          api.get('/auth/me'),
           api.get('/jobs'),
           api.get('/applications/me')
         ]);
+        setUser(userRes.data);
         setJobs(jobsRes.data);
         setApplications(appsRes.data);
       } catch (err) {
@@ -49,7 +51,25 @@ const DashboardJobSeeker = () => {
         <div className="dashboard-header">
           <div>
             <h1>Welcome,{user?.name}</h1>
-            <p>Email: {user?.email}</p>
+            <p><strong>Email:</strong> {user?.email}</p>
+            <p><strong>Role:</strong>{user?.role}</p>
+            {user?.role === 'job_seeker' && (
+              <>
+                <p><strong>Skills:</strong> {user.skills?.join(', ') || 'N/A'}</p>
+                <p><strong>Education:</strong></p>
+                <ul>
+                  {user.profile?.education?.map((edu, index) => (
+                    <li key={index}>{edu.degree} from {edu.institution} ({edu.year})</li>
+                  ))}
+                </ul>
+                <p><strong>Experience:</strong></p>
+                <ul>
+                  {user.profile?.experience?.map((exp, index) => (
+                    <li key={index}>{exp.title} at {exp.company} ({exp.duration}) - {exp.description}</li>
+                  ))}
+                </ul>
+               </>
+            )} 
           </div>
           <button className="edit-btn" onClick={() => navigate('/edit-profile')}>Edit Profile</button>
         </div>'

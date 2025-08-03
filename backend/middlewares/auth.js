@@ -9,12 +9,22 @@ const protect = async (req, res, next) => {
     }
 
     const token = authHeader.replace('Bearer ', '').trim();
+    if (!process.env.JWT_SECRET) {
+      return errorHandler(res, 500, 'JWT secret is not configured');
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded || !decoded.id) {
+      return errorHandler(res, 401, 'Invalid token payload');
+    }
+
 
     req.user = { id: decoded.id }; // Attach user ID to request
     next();
   } catch (err) {
-    console.error('JWT Auth Error:', err.message);
+    if (process.env.NODE_ENV !== 'production') {
+      console.error('JWT Auth Error:', err.message);
+    }
     return errorHandler(res, 401, 'Invalid or expired token');
   }
 };
