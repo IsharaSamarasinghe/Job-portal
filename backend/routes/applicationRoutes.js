@@ -9,8 +9,11 @@ router.get('/me', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const applications = await Application.find({ jobSeeker: userId })
-      .populate('job') // to get job details (title, company, etc.)
+    const applications = await Application.find({ applicant: userId })
+      .populate({
+        path:'job',
+        select: 'title company location description'
+      })
       .sort({ createdAt: -1 });
 
     res.json(applications);

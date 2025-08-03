@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
@@ -21,6 +22,9 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
+
+// Serve uploaded files before error handling!
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Error Handling Middleware
 // Handle 404 Not Found for unregistered routes

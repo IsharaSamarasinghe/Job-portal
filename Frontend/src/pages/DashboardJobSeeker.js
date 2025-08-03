@@ -101,8 +101,42 @@ const DashboardJobSeeker = () => {
             <ul>
               {applications.map(app => (
                 <li key={app._id}>
-                  <h3>{app.job.title}</h3>
-                  <p>Status: {app.status}</p>
+                  <h3>{app.job?.title}</h3>
+                  <p><strong>Company:</strong> {app.job?.company}</p>
+                  <p><strong>Location:</strong> {app.job?.location}</p>
+                  <p><strong>Status:</strong> {app.status}</p>
+                  <p>
+                    <strong>Resume:</strong>{' '}
+                    <a
+                      href={`http://localhost:5000/uploads/${app.resume}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Resume
+                    </a>
+                  </p>
+                  <p>
+                    <strong>Cover Letter:</strong>{' '}
+                    <a
+                      href={`http://localhost:5000/uploads/${app.coverLetter}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Cover Letter
+                    </a>
+                  </p>
+                  {app.notes && app.notes.length > 0 && (
+                    <div>
+                      <strong>Recruiter Notes:</strong>
+                      <ul>
+                        {app.notes.map((note, idx) => (
+                          <li key={idx}>
+                            {note.content} ({new Date(note.createdAt).toLocaleDateString()})
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
