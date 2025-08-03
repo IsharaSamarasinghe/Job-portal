@@ -42,6 +42,7 @@ const DashboardRecruiter = () => {
   // Handle logout
   const handleLogout = async () => {
     sessionStorage.clear();
+    window.dispatchEvent(new Event("login")); // this will re-trigger navbar state
     navigate('/login');
   };
 
